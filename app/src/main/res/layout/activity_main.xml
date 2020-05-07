@@ -14,7 +14,7 @@
     </ImageView>
 
     <ListView
-        android:id="@+id/userlist"
+        android:id="@+id/listview"
         tools:listitem="@layout/row_item"
         android:dividerHeight="3dp"
         android:layout_width="match_parent"
