@@ -1,11 +1,10 @@
-package retrofit;
+package rettrofit;
 
 import android.content.Context;
 
-import model.CategoryModel;
+import retrofit.RequestListener;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class APICallback<T> implements Callback<T> {
     protected RequestListener<T> listener;
@@ -17,7 +16,7 @@ public class APICallback<T> implements Callback<T> {
     }
 
     @Override
-    public void onResponse(Call<T> call, Response<T> response) {
+    public void onResponse(Call<T> call, retrofit2.Response<T> response) {
         listener.onSuccess(response.body());
 
     }

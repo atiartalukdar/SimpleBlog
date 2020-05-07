@@ -1,6 +1,8 @@
 package retrofit;
 
 import android.content.Context;
+
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import bp.MyApplication;
@@ -35,8 +37,8 @@ public class APIManager {
         api = retrofit.create(APIInterface.class);
     }
 
-    public void getCategoryList(RequestListener<CategoryModel> listener) {
-        api.getCategoryList().enqueue(new APICallback<CategoryModel>(_context,listener));
+    public void getCategoryList(RequestListener<List<CategoryModel>> listener) {
+        api.getCategoryList().enqueue(new rettrofit.APICallback<List<CategoryModel>>(_context,listener));
     }
 
 }

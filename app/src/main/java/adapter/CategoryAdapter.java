@@ -61,7 +61,6 @@ public class CategoryAdapter extends BaseAdapter {
 
         LinearLayout listItem = convertView.findViewById(R.id.list_item);
         TextView ctg = convertView.findViewById(R.id.category);
-        if (categoryModel.getStatus().equals(1)){
             ctg.setText(categoryModel.getCategory());
 
             listItem.setOnClickListener(new View.OnClickListener() {
@@ -70,10 +69,11 @@ public class CategoryAdapter extends BaseAdapter {
                     Intent intent = new Intent(context, ArticleActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("id", categoryModel.getId());
+                    intent.putExtra("ctg", categoryModel.getCategory());
                     context.startActivity(intent);
                 }
             });
-        }
+
 /*        Picasso.get()
                 .load(member.getMEMBER_PHOTO_URL())
                 .placeholder(R.drawable.dummy_profile)
