@@ -92,3 +92,4 @@ public class CategoryAdapter extends BaseAdapter {
         categoryModelList.addAll(resuls);
         notifyDataSetChanged();
     }
+}
