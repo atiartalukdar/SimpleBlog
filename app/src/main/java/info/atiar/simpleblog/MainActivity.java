@@ -37,9 +37,7 @@ public class MainActivity extends AppCompatActivity {
         _listView = findViewById(R.id.listview);
         container = findViewById(R.id.shimmer_view_container);
         container.startShimmer();
-
         _apiManager = new APIManager();
-
         categoryAdapter = new CategoryAdapter(this, categoryModelList);
         _listView.setAdapter(categoryAdapter);
 

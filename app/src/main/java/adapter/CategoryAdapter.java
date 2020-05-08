@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -61,6 +62,8 @@ public class CategoryAdapter extends BaseAdapter {
 
         LinearLayout listItem = convertView.findViewById(R.id.list_item);
         TextView ctg = convertView.findViewById(R.id.category);
+        ImageView ctgImg = convertView.findViewById(R.id.categoryFeatureImage);
+        ctgImg.setVisibility(View.INVISIBLE);
         ctg.setBackgroundColor(activity.getResources().getColor(R.color.white));
         ctg.setText(categoryModel.getCategory());
 
@@ -87,7 +90,7 @@ public class CategoryAdapter extends BaseAdapter {
 
     }
 
-    //To update the searchView items in TransportList Activity
+    //To update the searchView items
     public void update(List<CategoryModel> resuls){
         categoryModelList = new ArrayList<>();
         categoryModelList.addAll(resuls);

@@ -7,7 +7,7 @@ public class ArticleModel {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("category_id")
     @Expose
     private String categoryId;
@@ -30,11 +30,11 @@ public class ArticleModel {
     @Expose
     private String updatedAt;
 
-    public Integer getId() {
-        return id;
+    public String getId() {
+        return id+"";
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -94,4 +94,14 @@ public class ArticleModel {
         this.updatedAt = updatedAt;
     }
 
+    @Override
+    public String toString() {
+        return "ArticleModel{" +
+                "id=" + id +
+                ", categoryId='" + categoryId + '\'' +
+                ", artical='" + artical + '\'' +
+                ", maxRead='" + maxRead + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

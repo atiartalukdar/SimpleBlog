@@ -7,7 +7,7 @@ public class CategoryModel {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("category")
     @Expose
     private String category;
@@ -21,11 +21,11 @@ public class CategoryModel {
     @Expose
     private String updatedAt;
 
-    public Integer getId() {
-        return id;
+    public String getId() {
+        return id+"";
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

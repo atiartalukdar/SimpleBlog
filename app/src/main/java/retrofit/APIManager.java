@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import bp.MyApplication;
 
+import model.ArticleModel;
 import model.CategoryModel;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -39,6 +40,10 @@ public class APIManager {
 
     public void getCategoryList(RequestListener<List<CategoryModel>> listener) {
         api.getCategoryList().enqueue(new rettrofit.APICallback<List<CategoryModel>>(_context,listener));
+    }
+
+    public void getArticleList(String ctgID, RequestListener<List<ArticleModel>> listener) {
+        api.getArticleList(ctgID).enqueue(new rettrofit.APICallback<List<ArticleModel>>(_context,listener));
     }
 
 }
