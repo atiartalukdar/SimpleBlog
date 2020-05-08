@@ -61,7 +61,8 @@ public class CategoryAdapter extends BaseAdapter {
 
         LinearLayout listItem = convertView.findViewById(R.id.list_item);
         TextView ctg = convertView.findViewById(R.id.category);
-            ctg.setText(categoryModel.getCategory());
+        ctg.setBackgroundColor(activity.getResources().getColor(R.color.white));
+        ctg.setText(categoryModel.getCategory());
 
             listItem.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -92,4 +93,6 @@ public class CategoryAdapter extends BaseAdapter {
         categoryModelList.addAll(resuls);
         notifyDataSetChanged();
     }
+
+
 }

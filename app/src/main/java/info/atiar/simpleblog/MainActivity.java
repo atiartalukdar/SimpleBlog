@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = getClass().getName() + " Atiar - ";
 
     ListView _listView;
+    ShimmerFrameLayout container;
 
     APIManager _apiManager;
     CategoryAdapter categoryAdapter;
@@ -31,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
         _listView = findViewById(R.id.listview);
+        container = findViewById(R.id.shimmer_view_container);
+        container.startShimmer();
+
         _apiManager = new APIManager();
 
         categoryAdapter = new CategoryAdapter(this, categoryModelList);
@@ -49,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
                         if (ctg.getStatus().equals("1")){
                             categoryModelList.add(ctg);
                         }
-                        categoryAdapter.notifyDataSetChanged();
                     }
+                    container.stopShimmer();
+                    container.setVisibility(View.GONE);
+                    categoryAdapter.notifyDataSetChanged();
                 }
             }
 
