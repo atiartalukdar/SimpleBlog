@@ -1,8 +1,11 @@
 package info.atiar.simpleblog;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -11,6 +14,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -24,6 +29,7 @@ import java.util.List;
 
 import bp.BP;
 import bp.OnSwipeTouchListener;
+import bp.SlideAnimationUtil;
 import model.ArticleModel;
 import model.CategoryModel;
 import retrofit.APIManager;
@@ -38,6 +44,7 @@ public class ArticleActivity extends AppCompatActivity {
     TextView _counter, _numberOfPage;
     String ctgID;
     int position;
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +53,7 @@ public class ArticleActivity extends AppCompatActivity {
         _articleWebview.getSettings().getJavaScriptEnabled();
         _counter = findViewById(R.id.counter);
         _numberOfPage = findViewById(R.id.numberOfPage);
-
+        context = this;
         _apiManager = new APIManager();
         Intent intent = getIntent();
         ctgID = intent.getStringExtra("id");
@@ -59,14 +66,17 @@ public class ArticleActivity extends AppCompatActivity {
 
             public void onSwipeRight() {
                 position--;
-
                 if (position<=0){
                     position=0;
                 }
                 _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
                 _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
                 _numberOfPage.setText(articleModelList.size() + " / " + (position+1));
+                SlideAnimationUtil.slideOutToRight(context, _articleWebview);
+
+
             }
+
             public void onSwipeLeft() {
                 position++;
                 if (position>=articleModelList.size()-1){
@@ -75,7 +85,10 @@ public class ArticleActivity extends AppCompatActivity {
                 _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
                 _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
                 _numberOfPage.setText(articleModelList.size() + " / " + (position+1));
+                SlideAnimationUtil.slideOutToLeft(context, _articleWebview);
+
             }
+
 
         });
     }
@@ -116,8 +129,26 @@ public class ArticleActivity extends AppCompatActivity {
     }
 
     public void counterFunction(View view) {
-        BP.setReadCount(ctgID,articleModelList.get(position).getId(),BP.getReadCount(ctgID,articleModelList.get(position).getId())+1);
-        _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
+        if (BP.getReadCount(ctgID, articleModelList.get(position).getId()) >= articleModelList.get(position).getMaxRead()){
+            AlertDialog.Builder builder = new AlertDialog.Builder(ArticleActivity.this)
+                    .setTitle("You reached to the limit.")
+                    .setCancelable(true)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            BP.setReadCount(ctgID,articleModelList.get(position).getId(),0);
+                            _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
+                        }
+                    });
+            builder.create();
+            builder.show();
+        }else{
+            BP.setReadCount(ctgID,articleModelList.get(position).getId(),BP.getReadCount(ctgID,articleModelList.get(position).getId())+1);
+            _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
+        }
+
+
     }
 
     // Activity
@@ -139,7 +170,7 @@ public class ArticleActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
     @Override

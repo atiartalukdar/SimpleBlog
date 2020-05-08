@@ -54,8 +54,8 @@ public class ArticleModel {
         this.artical = artical;
     }
 
-    public String getMaxRead() {
-        return maxRead;
+    public int getMaxRead() {
+        return Integer.parseInt(maxRead);
     }
 
     public void setMaxRead(String maxRead) {

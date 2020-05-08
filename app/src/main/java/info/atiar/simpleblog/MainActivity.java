@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.e(TAG, "Image path = "+ BP.ImageURL+response);
                     Picasso.get()
                             .load(BP.ImageURL+response)
-                            .placeholder(R.drawable.image)
                             .centerCrop()
                             .fit()
                             .into(_topBanner);
