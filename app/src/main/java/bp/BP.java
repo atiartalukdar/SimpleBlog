@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class BP {
     private static final String PREFS_NAME = "pref";
-    private static final String ImageURL = "https://atiar.info/blogadmin/images/";
+    public static final String ImageURL = "https://atiar.info/blogadmin/images/";
 
     public static void fromHtml(EditText textview, String htmlText){
 

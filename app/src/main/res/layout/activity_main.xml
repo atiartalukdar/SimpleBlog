@@ -12,7 +12,6 @@
 
         <ImageView
             android:id="@+id/topBanner"
-            android:src="@drawable/image"
             android:fitsSystemWindows="true"
             android:scaleType="fitXY"
             android:layout_width="match_parent"

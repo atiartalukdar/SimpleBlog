@@ -2,6 +2,9 @@ package retrofit;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +25,10 @@ public class APIManager {
 
     public APIManager(){
 
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(5*60, TimeUnit.SECONDS)
                 .readTimeout(2*60, TimeUnit.SECONDS)
@@ -32,7 +39,7 @@ public class APIManager {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
         api = retrofit.create(APIInterface.class);
@@ -44,6 +51,10 @@ public class APIManager {
 
     public void getArticleList(String ctgID, RequestListener<List<ArticleModel>> listener) {
         api.getArticleList(ctgID).enqueue(new rettrofit.APICallback<List<ArticleModel>>(_context,listener));
+    }
+
+    public void getFeatureImage(RequestListener<String> listener) {
+        api.getFeatureImge().enqueue(new rettrofit.APICallback<String>(_context,listener));
     }
 
 }

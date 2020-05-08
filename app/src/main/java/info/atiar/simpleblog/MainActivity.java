@@ -5,14 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import adapter.CategoryAdapter;
+import bp.BP;
 import model.CategoryModel;
 import retrofit.APIInterface;
 import retrofit.APIManager;
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = getClass().getName() + " Atiar - ";
 
     ListView _listView;
+    ImageView _topBanner;
     ShimmerFrameLayout container;
 
     APIManager _apiManager;
@@ -35,12 +39,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
         _listView = findViewById(R.id.listview);
+        _topBanner = findViewById(R.id.topBanner);
         container = findViewById(R.id.shimmer_view_container);
         container.startShimmer();
         _apiManager = new APIManager();
         categoryAdapter = new CategoryAdapter(this, categoryModelList);
         _listView.setAdapter(categoryAdapter);
-
+        loadFeatureImage();
         loadCategoryListFromServer();
 
     }
@@ -64,6 +69,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onError(Throwable t) {
 
+            }
+        });
+    }
+
+    private void loadFeatureImage(){
+        _apiManager.getFeatureImage(new RequestListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                if (response != null){
+                    Log.e(TAG, "Image path = "+ BP.ImageURL+response);
+                    Picasso.get()
+                            .load(BP.ImageURL+response)
+                            .placeholder(R.drawable.image)
+                            .centerCrop()
+                            .fit()
+                            .into(_topBanner);
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                Log.e(TAG,t.getMessage());
             }
         });
     }

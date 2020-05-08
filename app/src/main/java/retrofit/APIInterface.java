@@ -19,5 +19,5 @@ public interface APIInterface {
     Call<List<ArticleModel>> getArticleList(@Path("id") String id);
 
     @GET("feature_image")
-    Call<List<CategoryModel>> getFeatureImge();
+    Call<String> getFeatureImge();
 }
