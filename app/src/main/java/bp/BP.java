@@ -20,8 +20,6 @@ public class BP {
         }
     }
 
-
-
     public static int getReadCount(String ctgID, String articleID){
         try {
             return getPreference(ctgID+"-"+articleID);
@@ -34,13 +32,6 @@ public class BP {
     public static void setReadCount(String ctgID, String articleID, int value){
         setPreference(ctgID+"-"+articleID,value);
     }
-
-
-
-
-
-
-
 
 
 

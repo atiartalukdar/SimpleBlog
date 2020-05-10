@@ -3,6 +3,7 @@ package adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,8 +63,12 @@ public class CategoryAdapter extends BaseAdapter {
 
         LinearLayout listItem = convertView.findViewById(R.id.list_item);
         TextView ctg = convertView.findViewById(R.id.category);
-        ImageView ctgImg = convertView.findViewById(R.id.categoryFeatureImage);
-        ctgImg.setVisibility(View.INVISIBLE);
+        TextView leftColor = convertView.findViewById(R.id.leftColor);
+        TextView rightColor = convertView.findViewById(R.id.rightColor);
+
+        leftColor.setBackgroundColor(Color.parseColor("#000000"));
+        rightColor.setBackgroundColor(Color.parseColor("#000000"));
+
         ctg.setBackgroundColor(activity.getResources().getColor(R.color.white));
         ctg.setText(categoryModel.getCategory());
 
