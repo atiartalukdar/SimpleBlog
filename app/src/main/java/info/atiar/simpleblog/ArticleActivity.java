@@ -75,13 +75,16 @@ public class ArticleActivity extends AppCompatActivity {
 
             public void onSwipeRight() {
                 position--;
+
                 if (position<=0){
                     position=0;
                 }
                 _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
                 _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
                 _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
-                SlideAnimationUtil.slideOutToRight(context, _articleWebview);
+                if (position>0){
+                    SlideAnimationUtil.slideOutToRight(context, _articleWebview);
+                }
 
 
             }
@@ -94,8 +97,10 @@ public class ArticleActivity extends AppCompatActivity {
                 _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
                 _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
                 _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
-                SlideAnimationUtil.slideOutToLeft(context, _articleWebview);
 
+                if (position<articleModelList.size()-1){
+                    SlideAnimationUtil.slideOutToLeft(context, _articleWebview);
+                }
             }
 
             @Override
