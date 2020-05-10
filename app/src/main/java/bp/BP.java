@@ -55,7 +55,7 @@ public class BP {
         settings.edit().remove(keyToRemove).commit();
     }
 
-    private static void removeAllItem() {
+    public static void removeAllItem() {
         SharedPreferences settings = MyApplication.getContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         settings.edit().clear().commit();
     }

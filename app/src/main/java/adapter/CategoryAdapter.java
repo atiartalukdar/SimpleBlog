@@ -80,7 +80,7 @@ public class CategoryAdapter extends BaseAdapter {
                     intent.putExtra("id", categoryModel.getId());
                     intent.putExtra("ctg", categoryModel.getCategory());
                     context.startActivity(intent);
-                    activity.overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+                    activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
                 }
             });
