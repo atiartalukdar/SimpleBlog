@@ -8,7 +8,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -39,6 +42,9 @@ public class ArticleActivity extends AppCompatActivity {
     private final String TAG = getClass().getName() + " Atiar - ";
     APIManager _apiManager;
     List<ArticleModel> articleModelList = new ArrayList<>();;
+    Vibrator v;
+    ToneGenerator tg;
+
 
     WebView _articleWebview;
     TextView _counter, _numberOfPage;
@@ -61,6 +67,9 @@ public class ArticleActivity extends AppCompatActivity {
         setTitle(ctg+"");
         Log.e(TAG, "Article ID = " + ctgID + "Article name = " + ctg );
         loadArticles(ctgID);
+
+        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100);
 
         _articleWebview.setOnTouchListener(new OnSwipeTouchListener(ArticleActivity.this) {
 
@@ -134,19 +143,9 @@ public class ArticleActivity extends AppCompatActivity {
 
     public void counterFunction(View view) {
         if (BP.getReadCount(ctgID, articleModelList.get(position).getId()) >= articleModelList.get(position).getMaxRead()){
-            AlertDialog.Builder builder = new AlertDialog.Builder(ArticleActivity.this)
-                    .setTitle("You reached to the limit.")
-                    .setCancelable(true)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            BP.setReadCount(ctgID,articleModelList.get(position).getId(),0);
-                            _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
-                        }
-                    });
-            builder.create();
-            builder.show();
+            v.vibrate(500);
+            tg.startTone(ToneGenerator.TONE_PROP_BEEP2);
+
         }else{
             BP.setReadCount(ctgID,articleModelList.get(position).getId(),BP.getReadCount(ctgID,articleModelList.get(position).getId())+1);
             _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");

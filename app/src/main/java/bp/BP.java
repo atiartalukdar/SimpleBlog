@@ -3,6 +3,8 @@ package bp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.text.Html;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,9 +34,6 @@ public class BP {
     public static void setReadCount(String ctgID, String articleID, int value){
         setPreference(ctgID+"-"+articleID,value);
     }
-
-
-
 
 
     //SharedPreferences
