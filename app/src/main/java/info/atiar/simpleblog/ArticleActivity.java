@@ -71,7 +71,7 @@ public class ArticleActivity extends AppCompatActivity {
                 }
                 _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
                 _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
-                _numberOfPage.setText(articleModelList.size() + " / " + (position+1));
+                _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
                 SlideAnimationUtil.slideOutToRight(context, _articleWebview);
 
 
@@ -84,12 +84,16 @@ public class ArticleActivity extends AppCompatActivity {
                 }
                 _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
                 _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
-                _numberOfPage.setText(articleModelList.size() + " / " + (position+1));
+                _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
                 SlideAnimationUtil.slideOutToLeft(context, _articleWebview);
 
             }
 
-
+            @Override
+            public void onClick() {
+                _counter.performClick();
+                super.onClick();
+            }
         });
     }
 
@@ -116,7 +120,7 @@ public class ArticleActivity extends AppCompatActivity {
                     position=0;
                     _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
                     _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
-                    _numberOfPage.setText(articleModelList.size() + " / " + (position+1));
+                    _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
                 }
                 kProgressHUD.dismiss();
             }
@@ -147,8 +151,6 @@ public class ArticleActivity extends AppCompatActivity {
             BP.setReadCount(ctgID,articleModelList.get(position).getId(),BP.getReadCount(ctgID,articleModelList.get(position).getId())+1);
             _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
         }
-
-
     }
 
     // Activity
@@ -170,7 +172,7 @@ public class ArticleActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
     @Override
