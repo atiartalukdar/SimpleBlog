@@ -1,20 +1,23 @@
-package info.atiar.simpleblog;
+package info.atiar.simpleblog.ui.home;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,44 +25,61 @@ import java.util.List;
 
 import adapter.CategoryAdapter;
 import bp.BP;
+import info.atiar.simpleblog.R;
 import model.CategoryModel;
-import retrofit.APIInterface;
 import retrofit.APIManager;
 import retrofit.RequestListener;
-import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeFragment extends Fragment {
     private final String TAG = getClass().getName() + " Atiar - ";
-
     ListView _listView;
     ImageView _topBanner;
-    ShimmerFrameLayout container;
+    ShimmerFrameLayout Loading;
 
     APIManager _apiManager;
     CategoryAdapter categoryAdapter;
     List<CategoryModel> categoryModelList = new ArrayList<>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbarTop = findViewById(R.id.toolbar_top);
-        //TextView mTitle = toolbarTop.findViewById(R.id.toolbar_title);
-        setSupportActionBar(toolbarTop);
-        getSupportActionBar().setTitle("");
+    private HomeViewModel homeViewModel;
 
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        homeViewModel =
+                ViewModelProviders.of(this).get(HomeViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        _listView = findViewById(R.id.listview);
-        _topBanner = findViewById(R.id.topBanner);
-        container = findViewById(R.id.shimmer_view_container);
-        container.startShimmer();
+        FloatingActionButton fab =  root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        _listView = root.findViewById(R.id.listview);
+        _topBanner = root.findViewById(R.id.topBanner);
+        Loading = root.findViewById(R.id.shimmer_view_container);
+        Loading.startShimmer();
         _apiManager = new APIManager();
-        categoryAdapter = new CategoryAdapter(this, categoryModelList);
+        categoryAdapter = new CategoryAdapter(getActivity(), categoryModelList);
         _listView.setAdapter(categoryAdapter);
         loadFeatureImage();
         loadCategoryListFromServer();
 
+
+        /*final TextView textView = root.findViewById(R.id.text_home);
+        homeViewModel.getText().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                textView.setText(s);
+            }
+        });*/
+        _listView.addHeaderView(new View(getContext()));
+        _listView.addFooterView(new View(getContext()));
+        return root;
     }
+
 
     private void loadCategoryListFromServer() {
         _apiManager.getCategoryList(new RequestListener<List<CategoryModel>>() {
@@ -71,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
                             categoryModelList.add(ctg);
                         }
                     }
-                    container.stopShimmer();
-                    container.setVisibility(View.GONE);
+                    Loading.stopShimmer();
+                    Loading.setVisibility(View.GONE);
                     categoryAdapter.notifyDataSetChanged();
                 }
             }
@@ -104,28 +124,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_share_app:
-                break;
-            case R.id.menu_contact_us:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onResume() {
-        BP.removeAllItem();
-        super.onResume();
-    }
-
 }
