@@ -1,25 +1,26 @@
 package model;
-
+import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ArticleModel {
+public class ArticleModel implements Serializable
+{
 
     @SerializedName("id")
     @Expose
-    private int id;
+    private Integer id;
     @SerializedName("category_id")
     @Expose
     private String categoryId;
     @SerializedName("artical")
     @Expose
     private String artical;
+    @SerializedName("article_other_lan")
+    @Expose
+    private String articleOtherLan;
     @SerializedName("max_read")
     @Expose
     private String maxRead;
-    @SerializedName("image")
-    @Expose
-    private String image;
     @SerializedName("status")
     @Expose
     private String status;
@@ -29,12 +30,16 @@ public class ArticleModel {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    @SerializedName("sorting_index")
+    @Expose
+    private String sortingIndex;
+    private final static long serialVersionUID = -9113648578119626023L;
 
-    public String getId() {
-        return id+"";
+    public Integer getId() {
+        return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -54,20 +59,20 @@ public class ArticleModel {
         this.artical = artical;
     }
 
-    public int getMaxRead() {
-        return Integer.parseInt(maxRead);
+    public String getArticleOtherLan() {
+        return articleOtherLan;
+    }
+
+    public void setArticleOtherLan(String articleOtherLan) {
+        this.articleOtherLan = articleOtherLan;
+    }
+
+    public String getMaxRead() {
+        return maxRead;
     }
 
     public void setMaxRead(String maxRead) {
         this.maxRead = maxRead;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getStatus() {
@@ -93,6 +98,15 @@ public class ArticleModel {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public String getSortingIndex() {
+        return sortingIndex;
+    }
+
+    public void setSortingIndex(String sortingIndex) {
+        this.sortingIndex = sortingIndex;
+    }
+
 
     @Override
     public String toString() {

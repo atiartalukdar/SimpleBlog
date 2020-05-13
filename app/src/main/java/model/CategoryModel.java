@@ -1,16 +1,23 @@
 package model;
-
+import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CategoryModel {
+public class CategoryModel implements Serializable
+{
 
     @SerializedName("id")
     @Expose
-    private int id;
+    private Integer id;
     @SerializedName("category")
     @Expose
     private String category;
+    @SerializedName("cat_other_lan")
+    @Expose
+    private String catOtherLan;
+    @SerializedName("cat_color_code")
+    @Expose
+    private String catColorCode;
     @SerializedName("status")
     @Expose
     private String status;
@@ -20,12 +27,16 @@ public class CategoryModel {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    @SerializedName("sorting_index")
+    @Expose
+    private String sortingIndex;
+    private final static long serialVersionUID = 1715567010889795615L;
 
-    public String getId() {
-        return id+"";
+    public Integer getId() {
+        return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -35,6 +46,22 @@ public class CategoryModel {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getCatOtherLan() {
+        return catOtherLan;
+    }
+
+    public void setCatOtherLan(String catOtherLan) {
+        this.catOtherLan = catOtherLan;
+    }
+
+    public String getCatColorCode() {
+        return catColorCode;
+    }
+
+    public void setCatColorCode(String catColorCode) {
+        this.catColorCode = catColorCode;
     }
 
     public String getStatus() {
@@ -59,6 +86,14 @@ public class CategoryModel {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getSortingIndex() {
+        return sortingIndex;
+    }
+
+    public void setSortingIndex(String sortingIndex) {
+        this.sortingIndex = sortingIndex;
     }
 
 
