@@ -19,6 +19,7 @@
             android:textSize="22sp"
             android:layout_width="10dp"
             android:layout_gravity="center"
+            android:maxLines="1"
             android:background="@color/colorPrimary"
             android:layout_height="wrap_content">
 
@@ -36,6 +37,7 @@
             android:textDirection="locale"
             android:layout_width="match_parent"
             android:layout_weight="1"
+            android:maxLines="1"
             android:layout_height="wrap_content">
 
         </TextView>
@@ -45,6 +47,7 @@
             android:padding="10dp"
             android:textSize="22sp"
             android:layout_width="10dp"
+            android:maxLines="1"
             android:layout_gravity="center"
             android:background="@color/colorPrimary"
             android:layout_height="wrap_content">

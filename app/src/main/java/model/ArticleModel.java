@@ -8,7 +8,7 @@ public class ArticleModel implements Serializable
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("category_id")
     @Expose
     private String categoryId;
@@ -35,11 +35,11 @@ public class ArticleModel implements Serializable
     private String sortingIndex;
     private final static long serialVersionUID = -9113648578119626023L;
 
-    public Integer getId() {
-        return id;
+    public String getId() {
+        return String.valueOf(id);
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -67,8 +67,8 @@ public class ArticleModel implements Serializable
         this.articleOtherLan = articleOtherLan;
     }
 
-    public String getMaxRead() {
-        return maxRead;
+    public int getMaxRead() {
+        return Integer.parseInt(maxRead);
     }
 
     public void setMaxRead(String maxRead) {

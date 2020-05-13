@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,11 +68,18 @@ public class CategoryAdapter extends BaseAdapter {
         TextView leftColor = convertView.findViewById(R.id.leftColor);
         TextView rightColor = convertView.findViewById(R.id.rightColor);
 
-        leftColor.setBackgroundColor(Color.parseColor("#000000"));
-        rightColor.setBackgroundColor(Color.parseColor("#000000"));
+        leftColor.setBackgroundColor(Color.parseColor(categoryModel.getCatColorCode()));
+        rightColor.setBackgroundColor(Color.parseColor(categoryModel.getCatColorCode()));
 
         ctg.setBackgroundColor(activity.getResources().getColor(R.color.white));
         ctg.setText(categoryModel.getCategory());
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            ctg.setText(Html.fromHtml(categoryModel.getCategory(), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            ctg.setText(Html.fromHtml(categoryModel.getCategory()));
+        }
 
             listItem.setOnClickListener(new View.OnClickListener() {
                 @Override

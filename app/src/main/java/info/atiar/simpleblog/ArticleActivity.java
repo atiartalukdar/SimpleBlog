@@ -10,8 +10,10 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -80,7 +82,7 @@ public class ArticleActivity extends AppCompatActivity {
                     position=0;
                 }
                 _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
-                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
+                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId()));
                 _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
                 if (position>0){
                     SlideAnimationUtil.slideOutToRight(context, _articleWebview);
@@ -95,7 +97,7 @@ public class ArticleActivity extends AppCompatActivity {
                     position = articleModelList.size()-1;
                 }
                 _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
-                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
+                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId()+""));
                 _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
 
                 if (position<articleModelList.size()-1){
@@ -133,7 +135,7 @@ public class ArticleActivity extends AppCompatActivity {
                     }
                     position=0;
                     _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
-                    _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
+                    _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId()+""));
                     _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
                 }
                 kProgressHUD.dismiss();
@@ -163,7 +165,13 @@ public class ArticleActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         TextView textView = new TextView(this);
-        textView.setText(title);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            textView.setText(Html.fromHtml(title, Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            textView.setText(Html.fromHtml(title));
+        }
+        textView.setMaxLines(1);
         textView.setTextSize(20);
         textView.setTypeface(null, Typeface.BOLD);
         textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
