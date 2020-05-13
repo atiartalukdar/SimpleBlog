@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         container = findViewById(R.id.shimmer_view_container);
         container.startShimmer();
         _apiManager = new APIManager();
-        categoryAdapter = new CategoryAdapter(this, categoryModelList);
+        categoryAdapter = new CategoryAdapter(this, categoryModelList,0);
         _listView.setAdapter(categoryAdapter);
         loadFeatureImage();
         loadCategoryListFromServer();

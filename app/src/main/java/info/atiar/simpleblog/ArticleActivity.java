@@ -46,12 +46,13 @@ public class ArticleActivity extends AppCompatActivity {
     List<ArticleModel> articleModelList = new ArrayList<>();;
     Vibrator v;
     ToneGenerator tg;
+    boolean isTranslated = false;
 
 
     WebView _articleWebview;
     TextView _counter, _numberOfPage;
     String ctgID;
-    int position;
+    int position=0;
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,8 @@ public class ArticleActivity extends AppCompatActivity {
         ctgID = intent.getStringExtra("id");
         String ctg = intent.getStringExtra("ctg");
         setTitle(ctg+"");
-        Log.e(TAG, "Article ID = " + ctgID + "Article name = " + ctg );
+        Log.e(TAG, "Category ID = " + ctgID + "Article name = " + ctg );
+
         loadArticles(ctgID);
 
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -77,12 +79,12 @@ public class ArticleActivity extends AppCompatActivity {
 
             public void onSwipeRight() {
                 position--;
-
+                Log.e(TAG, "onSwipeRight= "+position+"");
                 if (position<=0){
                     position=0;
                 }
                 _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
-                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId()));
+                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
                 _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
                 if (position>0){
                     SlideAnimationUtil.slideOutToRight(context, _articleWebview);
@@ -92,12 +94,13 @@ public class ArticleActivity extends AppCompatActivity {
             }
 
             public void onSwipeLeft() {
+                Log.e(TAG, "onSwipeLeft= "+position+"");
                 position++;
                 if (position>=articleModelList.size()-1){
                     position = articleModelList.size()-1;
                 }
                 _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
-                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId()+""));
+                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
                 _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
 
                 if (position<articleModelList.size()-1){
@@ -135,7 +138,7 @@ public class ArticleActivity extends AppCompatActivity {
                     }
                     position=0;
                     _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
-                    _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId()+""));
+                    _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId()) +"");
                     _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
                 }
                 kProgressHUD.dismiss();
@@ -203,4 +206,13 @@ public class ArticleActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void changeLanguage(View view) {
+        if (isTranslated){
+            isTranslated  = false;
+            _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
+        }else {
+            isTranslated = true;
+            _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
+        }
+    }
 }

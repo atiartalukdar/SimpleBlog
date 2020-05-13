@@ -35,6 +35,7 @@ public class HomeFragment extends Fragment {
     ListView _listView;
     ImageView _topBanner;
     ShimmerFrameLayout Loading;
+    boolean isTranslated = false;
 
     APIManager _apiManager;
     CategoryAdapter categoryAdapter;
@@ -48,21 +49,13 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        FloatingActionButton fab =  root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         _listView = root.findViewById(R.id.listview);
         _topBanner = root.findViewById(R.id.topBanner);
         Loading = root.findViewById(R.id.shimmer_view_container);
         Loading.startShimmer();
         _apiManager = new APIManager();
-        categoryAdapter = new CategoryAdapter(getActivity(), categoryModelList);
+        categoryAdapter = new CategoryAdapter(getActivity(), categoryModelList,0);
         _listView.setAdapter(categoryAdapter);
         loadFeatureImage();
         loadCategoryListFromServer();
@@ -77,6 +70,27 @@ public class HomeFragment extends Fragment {
         });*/
         _listView.addHeaderView(new View(getContext()));
         _listView.addFooterView(new View(getContext()));
+
+
+        FloatingActionButton fab =  root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isTranslated){
+                    isTranslated  = false;
+                    categoryAdapter = new CategoryAdapter(getActivity(), categoryModelList,0);
+                    _listView.setAdapter(categoryAdapter);
+                    categoryAdapter.notifyDataSetChanged();
+                }else {
+                    isTranslated = true;
+                    categoryAdapter = new CategoryAdapter(getActivity(), categoryModelList,1);
+                    _listView.setAdapter(categoryAdapter);
+                    categoryAdapter.notifyDataSetChanged();
+                }
+
+
+            }
+        });
         return root;
     }
 

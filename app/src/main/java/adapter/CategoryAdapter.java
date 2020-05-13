@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +29,13 @@ public class CategoryAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<CategoryModel> categoryModelList;
+    int lan;
     private final String TAG = getClass().getSimpleName() + " Atiar= ";
 
-    public CategoryAdapter(Activity activity, List<CategoryModel> categoryModelList) {
+    public CategoryAdapter(Activity activity, List<CategoryModel> categoryModelList, int lan) {
         this.activity = activity;
         this.categoryModelList = categoryModelList;
+        this.lan = lan;
     }
 
     @Override
@@ -75,11 +78,20 @@ public class CategoryAdapter extends BaseAdapter {
         ctg.setText(categoryModel.getCategory());
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            ctg.setText(Html.fromHtml(categoryModel.getCategory(), Html.FROM_HTML_MODE_COMPACT));
-        } else {
-            ctg.setText(Html.fromHtml(categoryModel.getCategory()));
+        if (lan==0){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                ctg.setText(Html.fromHtml(categoryModel.getCategory(), Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                ctg.setText(Html.fromHtml(categoryModel.getCategory()));
+            }
+        }else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                ctg.setText(Html.fromHtml(categoryModel.getCatOtherLan(), Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                ctg.setText(Html.fromHtml(categoryModel.getCatOtherLan()));
+            }
         }
+
 
             listItem.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,6 +102,8 @@ public class CategoryAdapter extends BaseAdapter {
                     intent.putExtra("ctg", categoryModel.getCategory());
                     context.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+
+                    Log.e(TAG, "Category ID = " + categoryModel.getId() + "Article name = " + categoryModel.getCategory() );
 
                 }
             });

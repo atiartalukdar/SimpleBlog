@@ -3,7 +3,7 @@ import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CategoryModel implements Serializable
+public class CategoryModel
 {
 
     @SerializedName("id")
@@ -30,10 +30,9 @@ public class CategoryModel implements Serializable
     @SerializedName("sorting_index")
     @Expose
     private String sortingIndex;
-    private final static long serialVersionUID = 1715567010889795615L;
 
-    public Integer getId() {
-        return id;
+    public String getId() {
+        return id+"";
     }
 
     public void setId(Integer id) {
