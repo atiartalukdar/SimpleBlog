@@ -5,8 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -35,7 +37,6 @@ public class HomeFragment extends Fragment {
     ListView _listView;
     ImageView _topBanner;
     ShimmerFrameLayout Loading;
-    boolean isTranslated = false;
 
     APIManager _apiManager;
     CategoryAdapter categoryAdapter;
@@ -71,24 +72,20 @@ public class HomeFragment extends Fragment {
         _listView.addHeaderView(new View(getContext()));
         _listView.addFooterView(new View(getContext()));
 
-
-        FloatingActionButton fab =  root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isTranslated){
-                    isTranslated  = false;
+        Switch aSwitch =  root.findViewById(R.id.simpleSwitch1);
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
                     categoryAdapter = new CategoryAdapter(getActivity(), categoryModelList,0);
                     _listView.setAdapter(categoryAdapter);
                     categoryAdapter.notifyDataSetChanged();
-                }else {
-                    isTranslated = true;
+                } else {
+                    // The toggle is disabled
                     categoryAdapter = new CategoryAdapter(getActivity(), categoryModelList,1);
                     _listView.setAdapter(categoryAdapter);
                     categoryAdapter.notifyDataSetChanged();
                 }
-
-
             }
         });
         return root;

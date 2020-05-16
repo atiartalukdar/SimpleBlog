@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -34,27 +33,58 @@
             </com.facebook.shimmer.ShimmerFrameLayout>
 
             <ListView
-                android:layout_marginTop="1dp"
                 android:id="@+id/listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
                 android:overScrollMode="never"
-                tools:listitem="@layout/row_item"></ListView>
+                tools:listitem="@layout/row_item">
+
+            </ListView>
 
 
         </LinearLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/ic_action_translate" />
+            android:layout_gravity="bottom|right"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:textSize="20sp"
+                android:layout_marginRight="5dp"
+                android:text="EN">
+
+            </TextView>
+            <Switch
+                android:id="@+id/simpleSwitch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:switchMinWidth="56dp"
+                android:gravity="bottom|right"
+                android:textOff="EN"
+                android:textOn="AR" />
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:text="AR">
+
+            </TextView>
+        </LinearLayout>
+
 
 
     </FrameLayout>
-
 
 
 </LinearLayout>

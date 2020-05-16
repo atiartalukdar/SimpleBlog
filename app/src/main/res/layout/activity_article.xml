@@ -56,16 +56,42 @@
             android:layout_height="wrap_content">
         </TextView>
 
-        <ImageButton
-            android:layout_marginRight="20dp"
-            android:layout_gravity="right|center"
-            android:layout_width="50dp"
-            android:onClick="changeLanguage"
-            android:background="@color/colorPrimary"
-            android:src="@drawable/ic_action_translate"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="20dp"
+            android:gravity="center"
             android:layout_height="wrap_content">
 
-        </ImageButton>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="5dp"
+                android:text="EN">
+
+            </TextView>
+            <Switch
+                android:id="@+id/simpleSwitch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:switchMinWidth="46dp"
+                android:gravity="bottom|right"
+                android:textOff="EN"
+                android:textOn="AR" />
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                android:text="AR">
+
+            </TextView>
+        </LinearLayout>
 
     </FrameLayout>
 

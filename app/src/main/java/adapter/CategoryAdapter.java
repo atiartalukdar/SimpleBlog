@@ -78,7 +78,7 @@ public class CategoryAdapter extends BaseAdapter {
         ctg.setText(categoryModel.getCategory());
 
 
-        if (lan==0){
+        if (lan==1){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 ctg.setText(Html.fromHtml(categoryModel.getCategory(), Html.FROM_HTML_MODE_COMPACT));
             } else {

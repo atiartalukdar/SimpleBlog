@@ -22,8 +22,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import java.util.ArrayList;
 import java.util.List;
 
+import adapter.CategoryAdapter;
 import bp.BP;
 import bp.OnSwipeTouchListener;
 import bp.SlideAnimationUtil;
@@ -69,6 +72,7 @@ public class ArticleActivity extends AppCompatActivity {
         String ctg = intent.getStringExtra("ctg");
         setTitle(ctg+"");
         Log.e(TAG, "Category ID = " + ctgID + "Article name = " + ctg );
+        final Switch aSwitch =  findViewById(R.id.simpleSwitch1);
 
         loadArticles(ctgID);
 
@@ -83,12 +87,16 @@ public class ArticleActivity extends AppCompatActivity {
                 if (position<=0){
                     position=0;
                 }
-                _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
+                if (aSwitch.isChecked()){
+                    _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
+                }else {
+                    _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
+                }
                 _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
                 _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
-                if (position>0){
+               /* if (position>0){
                     SlideAnimationUtil.slideOutToRight(context, _articleWebview);
-                }
+                }*/
 
 
             }
@@ -99,19 +107,38 @@ public class ArticleActivity extends AppCompatActivity {
                 if (position>=articleModelList.size()-1){
                     position = articleModelList.size()-1;
                 }
-                _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
+
+                if (aSwitch.isChecked()){
+                    _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
+                }else {
+                    _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
+                }
                 _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
                 _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
 
-                if (position<articleModelList.size()-1){
+               /* if (position<articleModelList.size()-1){
                     SlideAnimationUtil.slideOutToLeft(context, _articleWebview);
-                }
+                }*/
             }
 
             @Override
             public void onClick() {
                 _counter.performClick();
                 super.onClick();
+            }
+        });
+
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                    _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
+
+                } else {
+                    // The toggle is disabled
+                    _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
+
+                }
             }
         });
     }
@@ -137,7 +164,7 @@ public class ArticleActivity extends AppCompatActivity {
                         }
                     }
                     position=0;
-                    _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
+                    _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
                     _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId()) +"");
                     _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
                 }
@@ -206,13 +233,4 @@ public class ArticleActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void changeLanguage(View view) {
-        if (isTranslated){
-            isTranslated  = false;
-            _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
-        }else {
-            isTranslated = true;
-            _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
-        }
-    }
 }
