@@ -8,28 +8,23 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_action_home"
             android:title="Home" />
+
+        <item
+            android:id="@+id/nav_send"
+            android:icon="@drawable/ic_mail_outline_black_24dp"
+            android:title="Contact Us" />
+        <item
+            android:id="@+id/nav_send_whatsapp"
+            android:icon="@drawable/whatsapp"
+            android:title="WhatsApp" />
+        <item
+            android:id="@+id/nav_send_telegram"
+            android:icon="@drawable/telegram_app"
+            android:title="Telegram" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Share" />
     </group>
-
-    <item android:title="">
-        <menu>
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_action_contact"
-                android:title="Contact Us" />
-            <item
-                android:id="@+id/nav_send_whatsapp"
-                android:icon="@drawable/ic_action_whatsapp"
-                android:title="WhatsApp" />
-            <item
-                android:id="@+id/nav_send_telegram"
-                android:icon="@drawable/ic_action_telegram"
-                android:title="Telegram" />
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-
-        </menu>
-    </item>
 
 </menu>
