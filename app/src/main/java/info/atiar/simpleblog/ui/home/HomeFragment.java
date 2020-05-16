@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
         _listView.addHeaderView(new View(getContext()));
         _listView.addFooterView(new View(getContext()));
 
-        Switch aSwitch =  root.findViewById(R.id.simpleSwitch1);
+  /*      Switch aSwitch =  root.findViewById(R.id.simpleSwitch1);
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment {
                     categoryAdapter.notifyDataSetChanged();
                 }
             }
-        });
+        });*/
         return root;
     }
 
