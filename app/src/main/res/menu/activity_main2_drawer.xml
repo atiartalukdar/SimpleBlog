@@ -10,7 +10,8 @@
         <item
             android:id="@+id/nav_other_language"
             app:actionLayout="@layout/nav_item_switch"
-            tools:ignore="MenuTitle" />
+            android:icon="@drawable/ic_action_translate"
+            android:title=" English / عربي"/>
 
         <item
             android:id="@+id/nav_home"
