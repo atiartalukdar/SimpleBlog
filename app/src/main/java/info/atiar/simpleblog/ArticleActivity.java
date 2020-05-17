@@ -144,9 +144,7 @@ public class ArticleActivity extends AppCompatActivity {
             }
         });
 
-
         loadArticles(ctgID);
-
     }
 
     private void loadArticles(final String ctgID) {
