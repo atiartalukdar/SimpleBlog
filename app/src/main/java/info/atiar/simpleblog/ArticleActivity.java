@@ -49,7 +49,6 @@ public class ArticleActivity extends AppCompatActivity {
     List<ArticleModel> articleModelList = new ArrayList<>();;
     Vibrator v;
     ToneGenerator tg;
-    boolean isTranslated = false;
 
 
     WebView _articleWebview;
