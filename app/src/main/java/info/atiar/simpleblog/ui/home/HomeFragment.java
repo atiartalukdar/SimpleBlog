@@ -62,8 +62,6 @@ public class HomeFragment extends Fragment {
         _listView.setAdapter(categoryAdapter);
         loadFeatureImage();
         loadCategoryListFromServer();
-        _listView.setTextDirection(View.TEXT_DIRECTION_RTL);
-
         _listView.addHeaderView(new View(getContext()));
         _listView.addFooterView(new View(getContext()));
         return root;
@@ -73,7 +71,6 @@ public class HomeFragment extends Fragment {
         categoryAdapter = new CategoryAdapter(activity, categoryModelList,0);
         _listView.setAdapter(categoryAdapter);
         categoryAdapter.notifyDataSetChanged();
-        _listView.setTextDirection(View.TEXT_DIRECTION_RTL);
     }
 
     public static void ctgInEnglish(){
@@ -81,7 +78,6 @@ public class HomeFragment extends Fragment {
         categoryAdapter = new CategoryAdapter(activity, categoryModelList,1);
         _listView.setAdapter(categoryAdapter);
         categoryAdapter.notifyDataSetChanged();
-        _listView.setTextDirection(View.TEXT_DIRECTION_LTR);
     }
 
     private void loadCategoryListFromServer() {

@@ -79,12 +79,14 @@ public class CategoryAdapter extends BaseAdapter {
 
 
         if (lan==1){
+            ctg.setTextDirection(View.TEXT_DIRECTION_LTR);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 ctg.setText(Html.fromHtml(categoryModel.getCategory(), Html.FROM_HTML_MODE_COMPACT));
             } else {
                 ctg.setText(Html.fromHtml(categoryModel.getCategory()));
             }
         }else {
+            ctg.setTextDirection(View.TEXT_DIRECTION_RTL);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 ctg.setText(Html.fromHtml(categoryModel.getCatOtherLan(), Html.FROM_HTML_MODE_COMPACT));
             } else {
