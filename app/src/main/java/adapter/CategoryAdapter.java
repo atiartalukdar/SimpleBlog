@@ -102,6 +102,7 @@ public class CategoryAdapter extends BaseAdapter {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("id", categoryModel.getId());
                     intent.putExtra("ctg", categoryModel.getCategory());
+                    intent.putExtra("ctgO", categoryModel.getCatOtherLan());
                     context.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 

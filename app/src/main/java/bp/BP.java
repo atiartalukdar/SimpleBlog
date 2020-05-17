@@ -6,12 +6,19 @@ import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.Html;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.awt.font.TextAttribute;
+
 public class BP {
     private static final String PREFS_NAME = "pref";
+    private static final String PREFS_NAME1 = "pref1";
     public static final String ImageURL = "https://atiar.info/blogadmin/images/";
+    public static String languageKey = "language";
+    public static int ENGLISH = 100;
+    public static int ARABIC = 101;
 
     public static void fromHtml(EditText textview, String htmlText){
 
@@ -24,7 +31,7 @@ public class BP {
 
     public static int getReadCount(String ctgID, String articleID){
         try {
-            return getPreference(ctgID+"-"+articleID);
+            return getPreference(PREFS_NAME,ctgID+"-"+articleID);
         }catch (Exception e){
             e.printStackTrace();
             return 0;
@@ -32,20 +39,26 @@ public class BP {
     }
 
     public static void setReadCount(String ctgID, String articleID, int value){
-        setPreference(ctgID+"-"+articleID,value);
+        setPreference(PREFS_NAME,ctgID+"-"+articleID,value);
     }
 
-
+    //language change state
+    public static int getCurrentLanguage(){
+        Log.e("BP Atiar = ", getPreference(PREFS_NAME1,languageKey)+"");
+        return getPreference(PREFS_NAME1,languageKey);
+    }
+    public static void setCurrentLanguage(int languageInt){
+        setPreference(PREFS_NAME1,languageKey,languageInt);
+    }
     //SharedPreferences
-    private static boolean setPreference(String key, int value) {
-        SharedPreferences settings = MyApplication.getContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+    private static boolean setPreference(String prefName, String key, int value) {
+        SharedPreferences settings = MyApplication.getContext().getSharedPreferences(prefName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
         return editor.commit();
     }
-
-    private static int getPreference(String key) {
-        SharedPreferences settings = MyApplication.getContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+    private static int getPreference(String prefName, String key) {
+        SharedPreferences settings = MyApplication.getContext().getSharedPreferences(prefName, Context.MODE_PRIVATE);
         return settings.getInt(key, 0);
     }
 

@@ -60,20 +60,26 @@ public class ArticleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
+        final Switch aSwitch =  findViewById(R.id.simpleSwitch1);
+        Intent intent = getIntent();
+        ctgID = intent.getStringExtra("id");
+        final String ctg = intent.getStringExtra("ctg");
+        final String ctgO = intent.getStringExtra("ctgO");
+
+        if (BP.getCurrentLanguage()==BP.ENGLISH){
+            aSwitch.setChecked(false);
+            setTitle(ctg);
+        }else {
+            aSwitch.setChecked(true);
+            setTitle(ctgO);
+        }
+
         _articleWebview = findViewById(R.id.articleWebView);
         _articleWebview.getSettings().getJavaScriptEnabled();
         _counter = findViewById(R.id.counter);
         _numberOfPage = findViewById(R.id.numberOfPage);
         context = this;
         _apiManager = new APIManager();
-        Intent intent = getIntent();
-        ctgID = intent.getStringExtra("id");
-        String ctg = intent.getStringExtra("ctg");
-        setTitle(ctg+"");
-        Log.e(TAG, "Category ID = " + ctgID + "Article name = " + ctg );
-        final Switch aSwitch =  findViewById(R.id.simpleSwitch1);
-
-        loadArticles(ctgID);
 
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100);
@@ -126,20 +132,21 @@ public class ArticleActivity extends AppCompatActivity {
                 super.onClick();
             }
         });
-
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    // The toggle is enabled
+                    setTitle(ctgO);
                     _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
-
                 } else {
-                    // The toggle is disabled
+                    setTitle(ctg);
                     _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
-
                 }
             }
         });
+
+
+        loadArticles(ctgID);
+
     }
 
     private void loadArticles(final String ctgID) {
@@ -159,11 +166,15 @@ public class ArticleActivity extends AppCompatActivity {
                     for (ArticleModel article : response){
                         if (article.getStatus().equals("1")){
                             articleModelList.add(article);
-                            Log.e(TAG,article.toString());
                         }
                     }
                     position=0;
-                    _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
+
+                    if (BP.getCurrentLanguage()==BP.ENGLISH){
+                        _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
+                    }else {
+                        _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
+                    }
                     _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId()) +"");
                     _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
                 }

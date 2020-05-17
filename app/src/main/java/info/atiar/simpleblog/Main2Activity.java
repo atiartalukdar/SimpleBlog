@@ -1,6 +1,7 @@
 package info.atiar.simpleblog;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,11 +9,13 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ShareCompat;
 import androidx.core.view.GravityCompat;
@@ -40,7 +43,7 @@ import info.atiar.simpleblog.ui.home.HomeFragment;
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final String TAG = getClass().getName() + " Atiar - ";
     private AppBarConfiguration mAppBarConfiguration;
-    Fragment fragmentl,f;
+    Switch drawerSwitch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,17 +65,25 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         navigationView.setNavigationItemSelectedListener(this);
-        Switch drawerSwitch = (Switch) navigationView.getMenu().findItem(R.id.nav_other_language).getActionView();
+        drawerSwitch = (Switch) navigationView.getMenu().findItem(R.id.nav_other_language).getActionView();
+
+        if (BP.getCurrentLanguage()==BP.ENGLISH){
+            drawerSwitch.setChecked(false);
+        }else {
+            drawerSwitch.setChecked(true);
+        }
+
         drawerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     Log.e(TAG, "switch checked");
                     HomeFragment.ctgInArabic();
-
+                    BP.setCurrentLanguage(BP.ARABIC);
                 } else {
                     Log.e(TAG, "switch not checked");
                     HomeFragment.ctgInEnglish();
+                    BP.setCurrentLanguage(BP.ENGLISH);
                 }
             }
         });
@@ -91,8 +102,6 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-
 
     @Override
     protected void onResume() {

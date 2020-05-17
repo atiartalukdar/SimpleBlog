@@ -58,7 +58,11 @@ public class HomeFragment extends Fragment {
         Loading = root.findViewById(R.id.shimmer_view_container);
         Loading.startShimmer();
         _apiManager = new APIManager();
-        categoryAdapter = new CategoryAdapter(getActivity(), categoryModelList,0);
+        if (BP.getCurrentLanguage() == BP.ENGLISH){
+            categoryAdapter = new CategoryAdapter(getActivity(), categoryModelList,1);
+        }else {
+            categoryAdapter = new CategoryAdapter(getActivity(), categoryModelList,0);
+        }
         _listView.setAdapter(categoryAdapter);
         loadFeatureImage();
         loadCategoryListFromServer();
@@ -85,6 +89,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onSuccess(List<CategoryModel> response) {
                 if (response!=null){
+                    categoryModelList.clear();
                     for (CategoryModel ctg: response){
                         if (ctg.getStatus().equals("1")){
                             categoryModelList.add(ctg);
@@ -128,11 +133,5 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.e(TAG, "fragment onResume");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.e(TAG, "fragment onStart");
     }
 }
