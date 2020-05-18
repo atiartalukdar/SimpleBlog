@@ -15,7 +15,7 @@ import java.awt.font.TextAttribute;
 public class BP {
     private static final String PREFS_NAME = "pref";
     private static final String PREFS_NAME1 = "pref1";
-    public static final String ImageURL = "https://atiar.info/blogadmin/images/";
+    public static final String ImageURL = "http://athkarapplication.com/blogadmin/images/";
     public static String languageKey = "language";
     public static int ENGLISH = 100;
     public static int ARABIC = 101;

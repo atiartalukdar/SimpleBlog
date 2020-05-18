@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class APIManager {
-    public static final String BASE_URL = "https://atiar.info/blogadmin/api/";
+    public static final String BASE_URL = "http://athkarapplication.com/blogadmin/api/";
 
     private final APIInterface api;
     private Context _context;
