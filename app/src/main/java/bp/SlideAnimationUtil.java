@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
-import info.atiar.simpleblog.R;
+import com.athkarapplication.athkar.R;
 
 public class SlideAnimationUtil {
 

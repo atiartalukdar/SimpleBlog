@@ -1,4 +1,4 @@
-package info.atiar.simpleblog.ui.send;
+package com.athkarapplication.athkar.ui.send;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import info.atiar.simpleblog.R;
+import com.athkarapplication.athkar.R;
 
 public class SendFragment extends Fragment {
 

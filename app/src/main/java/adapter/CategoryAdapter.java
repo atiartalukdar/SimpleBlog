@@ -11,17 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import info.atiar.simpleblog.ArticleActivity;
-import info.atiar.simpleblog.R;
+import com.athkarapplication.athkar.ArticleActivity;
+import com.athkarapplication.athkar.R;
 import model.CategoryModel;
 
 public class CategoryAdapter extends BaseAdapter {

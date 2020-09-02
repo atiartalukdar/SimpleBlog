@@ -1,4 +1,4 @@
-package info.atiar.simpleblog;
+package com.athkarapplication.athkar;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("info.atiar.simpleblog", appContext.getPackageName());
+        assertEquals("com.athkarapplication.athkar", appContext.getPackageName());
     }
 }

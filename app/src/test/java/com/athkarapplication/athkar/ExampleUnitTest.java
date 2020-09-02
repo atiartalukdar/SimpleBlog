@@ -1,4 +1,4 @@
-package info.atiar.simpleblog;
+package com.athkarapplication.athkar;
 
 import org.junit.Test;
 

@@ -1,16 +1,16 @@
-package info.atiar.simpleblog.ui.send;
+package com.athkarapplication.athkar.ui.share;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SendViewModel extends ViewModel {
+public class ShareViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SendViewModel() {
+    public ShareViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is send fragment");
+        mText.setValue("This is share fragment");
     }
 
     public LiveData<String> getText() {

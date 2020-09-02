@@ -1,4 +1,4 @@
-package info.atiar.simpleblog.ui.home;
+package com.athkarapplication.athkar.ui.home;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,22 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Switch;
-import android.widget.TabHost;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,7 +21,9 @@ import java.util.List;
 
 import adapter.CategoryAdapter;
 import bp.BP;
-import info.atiar.simpleblog.R;
+import com.athkarapplication.athkar.R;
+
+import model.ArticleModel;
 import model.CategoryModel;
 import retrofit.APIManager;
 import retrofit.RequestListener;
@@ -133,5 +127,19 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.e(TAG, "fragment onResume");
+
+        Log.e("Atiar - ctg - " , "about to hit AllArticle");
+        _apiManager.getAllArticleList("0", new RequestListener<List<ArticleModel>>() {
+            @Override
+            public void onSuccess(List<ArticleModel> response) {
+                Log.e("Atiar - ctg - " , response.size()+"");
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+        });
+
     }
 }

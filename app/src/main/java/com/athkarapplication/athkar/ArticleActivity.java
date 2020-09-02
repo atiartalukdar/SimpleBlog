@@ -1,12 +1,11 @@
-package info.atiar.simpleblog;
+package com.athkarapplication.athkar;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -19,27 +18,20 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.CategoryAdapter;
 import bp.BP;
 import bp.OnSwipeTouchListener;
-import bp.SlideAnimationUtil;
 import model.ArticleModel;
-import model.CategoryModel;
 import retrofit.APIManager;
 import retrofit.RequestListener;
 
@@ -145,6 +137,8 @@ public class ArticleActivity extends AppCompatActivity {
         });
 
         loadArticles(ctgID);
+
+
     }
 
     private void loadArticles(final String ctgID) {
@@ -187,7 +181,7 @@ public class ArticleActivity extends AppCompatActivity {
     }
 
     public void counterFunction(View view) {
-        if (BP.getReadCount(ctgID, articleModelList.get(position).getId()) >= articleModelList.get(position).getMaxRead()){
+        if (BP.getReadCount(ctgID, articleModelList.get(position).getId()) >= Integer.parseInt(articleModelList.get(position).getMaxRead())){
             v.vibrate(500);
             tg.startTone(ToneGenerator.TONE_PROP_BEEP2);
 
@@ -202,8 +196,9 @@ public class ArticleActivity extends AppCompatActivity {
         //https://stackoverflow.com/questions/12387345/how-to-center-align-the-actionbar-title-in-android
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        title = title.replace("style=\"color:#","");
         TextView textView = new TextView(this);
-
+        textView.setTextColor(Color.WHITE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             textView.setText(Html.fromHtml(title, Html.FROM_HTML_MODE_COMPACT));
         } else {

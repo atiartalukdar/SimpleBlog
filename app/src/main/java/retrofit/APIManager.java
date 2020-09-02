@@ -18,7 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class APIManager {
-    public static final String BASE_URL = "http://athkarapplication.com/blogadmin/api/";
+    //public static final String BASE_URL = "https://athkarapplication.com/blogadmin/api/";
+    public static final String BASE_URL = "https://atiar.info/blogadmin/api/";
 
     private final APIInterface api;
     private Context _context;
@@ -46,15 +47,18 @@ public class APIManager {
     }
 
     public void getCategoryList(RequestListener<List<CategoryModel>> listener) {
-        api.getCategoryList().enqueue(new rettrofit.APICallback<List<CategoryModel>>(_context,listener));
+        api.getCategoryList().enqueue(new retrofit.APICallback<List<CategoryModel>>(_context,listener));
     }
 
     public void getArticleList(String ctgID, RequestListener<List<ArticleModel>> listener) {
-        api.getArticleList(ctgID).enqueue(new rettrofit.APICallback<List<ArticleModel>>(_context,listener));
+        api.getArticleList(ctgID).enqueue(new retrofit.APICallback<List<ArticleModel>>(_context,listener));
+    }
+    public void getAllArticleList(String ctgID, RequestListener<List<ArticleModel>> listener) {
+        api.getAllArticleList(ctgID).enqueue(new retrofit.APICallback<List<ArticleModel>>(_context,listener));
     }
 
     public void getFeatureImage(RequestListener<String> listener) {
-        api.getFeatureImge().enqueue(new rettrofit.APICallback<String>(_context,listener));
+        api.getFeatureImge().enqueue(new retrofit.APICallback<String>(_context,listener));
     }
 
 }

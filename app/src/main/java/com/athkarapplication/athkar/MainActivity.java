@@ -1,10 +1,8 @@
-package info.atiar.simpleblog;
+package com.athkarapplication.athkar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.squareup.picasso.Picasso;
@@ -22,11 +19,10 @@ import java.util.List;
 
 import adapter.CategoryAdapter;
 import bp.BP;
+import model.ArticleModel;
 import model.CategoryModel;
-import retrofit.APIInterface;
 import retrofit.APIManager;
 import retrofit.RequestListener;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = getClass().getName() + " Atiar - ";
@@ -58,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         _listView.setAdapter(categoryAdapter);
         loadFeatureImage();
         loadCategoryListFromServer();
-
     }
 
     private void loadCategoryListFromServer() {

@@ -1,25 +1,15 @@
-package info.atiar.simpleblog;
+package com.athkarapplication.athkar;
 
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ShareCompat;
 import androidx.core.view.GravityCompat;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -34,11 +24,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import bp.BP;
-import info.atiar.simpleblog.ui.home.HomeFragment;
+import com.athkarapplication.athkar.ui.home.HomeFragment;
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final String TAG = getClass().getName() + " Atiar - ";
@@ -87,6 +76,8 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 }
             }
         });
+
+
     }
 
     @Override

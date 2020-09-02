@@ -20,4 +20,9 @@ public interface APIInterface {
 
     @GET("feature_image")
     Call<String> getFeatureImge();
+
+    @GET("get_artical/{id}")
+    Call<List<ArticleModel>> getAllArticleList(@Path("id") String id);
+
+
 }

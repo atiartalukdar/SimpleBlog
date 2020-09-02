@@ -1,19 +1,13 @@
 package model;
-import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import io.objectbox.annotation.Entity;
-import io.objectbox.annotation.Id;
-
-@Entity
-public class ArticleModel
+public class AllArticleModel
 {
 
     @SerializedName("id")
     @Expose
-    @Id
-    public long id;
+    private long id;
     @SerializedName("category_id")
     @Expose
     private String categoryId;
@@ -38,6 +32,9 @@ public class ArticleModel
     @SerializedName("sorting_index")
     @Expose
     private String sortingIndex;
+    @SerializedName("category")
+    @Expose
+    private CategoryModel category;
 
     public String getId() {
         return id+"";
@@ -71,8 +68,8 @@ public class ArticleModel
         this.articleOtherLan = articleOtherLan;
     }
 
-    public String getMaxRead() {
-        return maxRead;
+    public int getMaxRead() {
+        return Integer.parseInt(maxRead);
     }
 
     public void setMaxRead(String maxRead) {
@@ -109,6 +106,14 @@ public class ArticleModel
 
     public void setSortingIndex(String sortingIndex) {
         this.sortingIndex = sortingIndex;
+    }
+
+    public CategoryModel getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryModel category) {
+        this.category = category;
     }
 
     @Override

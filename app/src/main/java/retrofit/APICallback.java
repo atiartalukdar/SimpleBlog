@@ -1,4 +1,4 @@
-package rettrofit;
+package retrofit;
 
 import android.content.Context;
 

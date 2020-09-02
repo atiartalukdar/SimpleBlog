@@ -3,12 +3,17 @@ import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+
+@Entity
 public class CategoryModel
 {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    @Id
+    public long id;
     @SerializedName("category")
     @Expose
     private String category;

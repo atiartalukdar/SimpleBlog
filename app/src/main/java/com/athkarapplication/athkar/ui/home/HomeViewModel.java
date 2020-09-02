@@ -1,4 +1,4 @@
-package info.atiar.simpleblog.ui.home;
+package com.athkarapplication.athkar.ui.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
