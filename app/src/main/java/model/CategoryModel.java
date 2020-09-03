@@ -5,15 +5,18 @@ import com.google.gson.annotations.SerializedName;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Unique;
 
 @Entity
 public class CategoryModel
 {
+    @Id
+    public long objectBoxID;
 
     @SerializedName("id")
     @Expose
-    @Id
-    public long id;
+    @Unique
+    public int categoryId;
     @SerializedName("category")
     @Expose
     private String category;
@@ -36,12 +39,13 @@ public class CategoryModel
     @Expose
     private String sortingIndex;
 
-    public String getId() {
-        return id+"";
+
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getCategory() {
@@ -104,7 +108,7 @@ public class CategoryModel
     @Override
     public String toString() {
         return "CategoryModel{" +
-                "id=" + id +
+                "id=" + categoryId +
                 ", category='" + category + '\'' +
                 ", status='" + status + '\'' +
                 '}';

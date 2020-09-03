@@ -7,7 +7,7 @@ public class AllArticleModel
 
     @SerializedName("id")
     @Expose
-    private long id;
+    private int id;
     @SerializedName("category_id")
     @Expose
     private String categoryId;
@@ -36,8 +36,8 @@ public class AllArticleModel
     @Expose
     private CategoryModel category;
 
-    public String getId() {
-        return id+"";
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
@@ -68,8 +68,8 @@ public class AllArticleModel
         this.articleOtherLan = articleOtherLan;
     }
 
-    public int getMaxRead() {
-        return Integer.parseInt(maxRead);
+    public String getMaxRead() {
+        return maxRead;
     }
 
     public void setMaxRead(String maxRead) {

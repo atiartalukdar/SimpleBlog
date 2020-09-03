@@ -30,8 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bp.BP;
+import bp.ObjectBox;
 import bp.OnSwipeTouchListener;
+import io.objectbox.Box;
 import model.ArticleModel;
+import model.ArticleModel_;
+import model.CategoryModel;
 import retrofit.APIManager;
 import retrofit.RequestListener;
 
@@ -48,6 +52,9 @@ public class ArticleActivity extends AppCompatActivity {
     String ctgID;
     int position=0;
     private Context context;
+
+    Box<ArticleModel> articleModelBox = ObjectBox.get().boxFor(ArticleModel.class);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,12 +96,11 @@ public class ArticleActivity extends AppCompatActivity {
                 }else {
                     _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
                 }
-                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
+                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId()+"")+"");
                 _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
                /* if (position>0){
                     SlideAnimationUtil.slideOutToRight(context, _articleWebview);
                 }*/
-
 
             }
 
@@ -110,7 +116,7 @@ public class ArticleActivity extends AppCompatActivity {
                 }else {
                     _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
                 }
-                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
+                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId()+""));
                 _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
 
                /* if (position<articleModelList.size()-1){
@@ -137,12 +143,10 @@ public class ArticleActivity extends AppCompatActivity {
         });
 
         loadArticles(ctgID);
-
-
     }
 
     private void loadArticles(final String ctgID) {
-        final KProgressHUD kProgressHUD = KProgressHUD.create(ArticleActivity.this)
+       /* final KProgressHUD kProgressHUD = KProgressHUD.create(ArticleActivity.this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setLabel("Please wait")
                 .setDetailsLabel("Downloading data")
@@ -150,6 +154,8 @@ public class ArticleActivity extends AppCompatActivity {
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f)
                 .show();
+
+
 
         _apiManager.getArticleList(ctgID, new RequestListener<List<ArticleModel>>() {
             @Override
@@ -167,7 +173,7 @@ public class ArticleActivity extends AppCompatActivity {
                     }else {
                         _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
                     }
-                    _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId()) +"");
+                    _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId() +""));
                     _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
                 }
                 kProgressHUD.dismiss();
@@ -178,16 +184,32 @@ public class ArticleActivity extends AppCompatActivity {
                 kProgressHUD.dismiss();
             }
         });
+
+*/
+        Log.e("Atiar - categoryID - ",  ctgID+" ");
+        List<ArticleModel> localArticles = articleModelBox.query().equal(ArticleModel_.categoryId, ctgID).build().find();
+        Log.e("Atiar - size - ",  localArticles.size()+" ");
+        articleModelList.addAll(localArticles);
+
+        position=0;
+
+        if (BP.getCurrentLanguage()==BP.ENGLISH){
+            _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
+        }else {
+            _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
+        }
+        _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId() +"")+"");
+        _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
     }
 
     public void counterFunction(View view) {
-        if (BP.getReadCount(ctgID, articleModelList.get(position).getId()) >= Integer.parseInt(articleModelList.get(position).getMaxRead())){
+        if (BP.getReadCount(ctgID, articleModelList.get(position).getArticleId()+"") >= Integer.parseInt(articleModelList.get(position).getMaxRead())){
             v.vibrate(500);
             tg.startTone(ToneGenerator.TONE_PROP_BEEP2);
 
         }else{
-            BP.setReadCount(ctgID,articleModelList.get(position).getId(),BP.getReadCount(ctgID,articleModelList.get(position).getId())+1);
-            _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getId())+"");
+            BP.setReadCount(ctgID,articleModelList.get(position).getArticleId()+"",BP.getReadCount(ctgID,articleModelList.get(position).getArticleId()+"")+1);
+            _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId()+""));
         }
     }
 
@@ -236,4 +258,8 @@ public class ArticleActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

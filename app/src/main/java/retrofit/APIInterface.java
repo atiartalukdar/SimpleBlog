@@ -3,6 +3,7 @@ package retrofit;
 
 import java.util.List;
 
+import model.AllArticleModel;
 import model.ArticleModel;
 import model.CategoryModel;
 import retrofit2.Call;
@@ -22,7 +23,7 @@ public interface APIInterface {
     Call<String> getFeatureImge();
 
     @GET("get_artical/{id}")
-    Call<List<ArticleModel>> getAllArticleList(@Path("id") String id);
+    Call<List<AllArticleModel>> getAllArticleList(@Path("id") String id);
 
 
 }

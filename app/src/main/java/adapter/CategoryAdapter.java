@@ -97,13 +97,13 @@ public class CategoryAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ArticleActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("id", categoryModel.getId());
+                    intent.putExtra("id", categoryModel.getCategoryId()+"");
                     intent.putExtra("ctg", categoryModel.getCategory());
                     intent.putExtra("ctgO", categoryModel.getCatOtherLan());
                     context.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
-                    Log.e(TAG, "Category ID = " + categoryModel.getId() + "Article name = " + categoryModel.getCategory() );
+                    Log.e(TAG, "Category ID = " + categoryModel.getCategoryId() + "Article name = " + categoryModel.getCategory() );
 
                 }
             });

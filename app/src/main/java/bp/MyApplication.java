@@ -13,6 +13,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+        ObjectBox.init(this);
+
     }
 
     public static Context getContext (){return context; }

@@ -5,15 +5,19 @@ import com.google.gson.annotations.SerializedName;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
-
+import io.objectbox.annotation.Unique;
+import io.objectbox.annotation.*;
 @Entity
 public class ArticleModel
 {
 
+    @Id
+    public long objectBoxID;
+
     @SerializedName("id")
     @Expose
-    @Id
-    public long id;
+    @Unique
+    public int articleId;
     @SerializedName("category_id")
     @Expose
     private String categoryId;
@@ -39,12 +43,12 @@ public class ArticleModel
     @Expose
     private String sortingIndex;
 
-    public String getId() {
-        return id+"";
+    public int getArticleId() {
+        return articleId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setArticleId(int articleId) {
+        this.articleId = articleId;
     }
 
     public String getCategoryId() {
@@ -114,11 +118,37 @@ public class ArticleModel
     @Override
     public String toString() {
         return "ArticleModel{" +
-                "id=" + id +
+                "id=" + articleId +
                 ", categoryId='" + categoryId + '\'' +
                 ", artical='" + artical + '\'' +
                 ", maxRead='" + maxRead + '\'' +
                 ", status='" + status + '\'' +
                 '}';
     }
+
+    public ArticleModel(AllArticleModel allArticleModel) {
+        this.articleId = allArticleModel.getId();
+        this.categoryId = allArticleModel.getCategoryId();
+        this.artical = allArticleModel.getArtical();
+        this.articleOtherLan = allArticleModel.getArticleOtherLan();
+        this.maxRead = allArticleModel.getMaxRead();
+        this.status = allArticleModel.getStatus();
+        this.createdAt = allArticleModel.getCreatedAt();
+        this.updatedAt = allArticleModel.getUpdatedAt();
+        this.sortingIndex = allArticleModel.getSortingIndex();
+    }
+
+    public ArticleModel(ArticleModel ArticleModel) {
+        this.articleId = ArticleModel.getArticleId();
+        this.categoryId = ArticleModel.getCategoryId();
+        this.artical = ArticleModel.getArtical();
+        this.articleOtherLan = ArticleModel.getArticleOtherLan();
+        this.maxRead = ArticleModel.getMaxRead();
+        this.status = ArticleModel.getStatus();
+        this.createdAt = ArticleModel.getCreatedAt();
+        this.updatedAt = ArticleModel.getUpdatedAt();
+        this.sortingIndex = ArticleModel.getSortingIndex();
+    }
+
+
 }
