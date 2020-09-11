@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.awt.font.TextAttribute;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import retrofit.APIManager;
 
@@ -37,7 +38,7 @@ public class BP {
         }
     }
 
-    public static int getReadCount(String ctgID, String articleID){
+    public static int getReadCount(String ctgID, int articleID){
         try {
             return getPreference(PREFS_NAME,ctgID+"-"+articleID);
         }catch (Exception e){
@@ -46,7 +47,7 @@ public class BP {
         }
     }
 
-    public static void setReadCount(String ctgID, String articleID, int value){
+    public static void setReadCount(String ctgID, int articleID, int value){
         setPreference(PREFS_NAME,ctgID+"-"+articleID,value);
     }
 
@@ -65,7 +66,8 @@ public class BP {
         Log.e(tag, "time in millSec - " + lastupdateTime);
         Calendar calendar = Calendar.getInstance();
         long timeMilliSeconds = calendar.getTimeInMillis();
-        setPreference(PREFS_NAME1,lastUpdateKey,timeMilliSeconds+"");
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(timeMilliSeconds);
+        setPreference(PREFS_NAME1,lastUpdateKey,seconds+"");
 
         return lastupdateTime;
     }

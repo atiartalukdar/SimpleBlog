@@ -1,11 +1,12 @@
 package com.athkarapplication.athkar;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -18,20 +19,26 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import adapter.CategoryAdapter;
 import bp.BP;
 import bp.ObjectBox;
 import bp.OnSwipeTouchListener;
+import bp.SlideAnimationUtil;
 import io.objectbox.Box;
 import model.ArticleModel;
 import model.ArticleModel_;
@@ -53,13 +60,14 @@ public class ArticleActivity extends AppCompatActivity {
     int position=0;
     private Context context;
 
-    Box<ArticleModel> articleModelBox = ObjectBox.get().boxFor(ArticleModel.class);
-
+    Box<ArticleModel> articleModelBox ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
         final Switch aSwitch =  findViewById(R.id.simpleSwitch1);
+        articleModelBox = ObjectBox.get().boxFor(ArticleModel.class);
+
         Intent intent = getIntent();
         ctgID = intent.getStringExtra("id");
         final String ctg = intent.getStringExtra("ctg");
@@ -96,11 +104,12 @@ public class ArticleActivity extends AppCompatActivity {
                 }else {
                     _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
                 }
-                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId()+"")+"");
+                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId())+"");
                 _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
                /* if (position>0){
                     SlideAnimationUtil.slideOutToRight(context, _articleWebview);
                 }*/
+
 
             }
 
@@ -116,7 +125,7 @@ public class ArticleActivity extends AppCompatActivity {
                 }else {
                     _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
                 }
-                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId()+""));
+                _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId())+"");
                 _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
 
                /* if (position<articleModelList.size()-1){
@@ -142,21 +151,16 @@ public class ArticleActivity extends AppCompatActivity {
             }
         });
 
-        loadArticles(ctgID);
+        try {
+            loadArticles(ctgID);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void loadArticles(final String ctgID) {
-       /* final KProgressHUD kProgressHUD = KProgressHUD.create(ArticleActivity.this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setLabel("Please wait")
-                .setDetailsLabel("Downloading data")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f)
-                .show();
 
-
-
+/*
         _apiManager.getArticleList(ctgID, new RequestListener<List<ArticleModel>>() {
             @Override
             public void onSuccess(List<ArticleModel> response) {
@@ -173,7 +177,7 @@ public class ArticleActivity extends AppCompatActivity {
                     }else {
                         _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
                     }
-                    _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId() +""));
+                    _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId()) +"");
                     _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
                 }
                 kProgressHUD.dismiss();
@@ -184,32 +188,29 @@ public class ArticleActivity extends AppCompatActivity {
                 kProgressHUD.dismiss();
             }
         });
-
 */
-        Log.e("Atiar - categoryID - ",  ctgID+" ");
-        List<ArticleModel> localArticles = articleModelBox.query().equal(ArticleModel_.categoryId, ctgID).build().find();
-        Log.e("Atiar - size - ",  localArticles.size()+" ");
-        articleModelList.addAll(localArticles);
+
+        articleModelList = articleModelBox.query().equal(ArticleModel_.categoryId, ctgID).build().find();
 
         position=0;
-
         if (BP.getCurrentLanguage()==BP.ENGLISH){
-            _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
-        }else {
-            _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
-        }
-        _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId() +"")+"");
+                _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArtical()+"", "text/html", "utf-8", null);
+            }else {
+                _articleWebview.loadDataWithBaseURL(null, articleModelList.get(position).getArticleOtherLan()+"", "text/html", "utf-8", null);
+            }
+        _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId()) +"");
         _numberOfPage.setText( (position+1) + " / " + articleModelList.size());
-    }
+
+}
 
     public void counterFunction(View view) {
-        if (BP.getReadCount(ctgID, articleModelList.get(position).getArticleId()+"") >= Integer.parseInt(articleModelList.get(position).getMaxRead())){
+        if (BP.getReadCount(ctgID, articleModelList.get(position).getArticleId()) >= articleModelList.get(position).getMaxRead()){
             v.vibrate(500);
             tg.startTone(ToneGenerator.TONE_PROP_BEEP2);
 
         }else{
-            BP.setReadCount(ctgID,articleModelList.get(position).getArticleId()+"",BP.getReadCount(ctgID,articleModelList.get(position).getArticleId()+"")+1);
-            _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId()+""));
+            BP.setReadCount(ctgID,articleModelList.get(position).getArticleId(),BP.getReadCount(ctgID,articleModelList.get(position).getArticleId())+1);
+            _counter.setText(BP.getReadCount(ctgID, articleModelList.get(position).getArticleId())+"");
         }
     }
 
@@ -218,9 +219,8 @@ public class ArticleActivity extends AppCompatActivity {
         //https://stackoverflow.com/questions/12387345/how-to-center-align-the-actionbar-title-in-android
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        title = title.replace("style=\"color:#","");
         TextView textView = new TextView(this);
-        textView.setTextColor(Color.WHITE);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             textView.setText(Html.fromHtml(title, Html.FROM_HTML_MODE_COMPACT));
         } else {
@@ -258,8 +258,4 @@ public class ArticleActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 }

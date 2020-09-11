@@ -20,15 +20,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class APIManager {
-    //public static final String BASE_URL = "https://athkarapplication.com/blogadmin/";
-    public static final String BASE_URL = "https://atiar.info/blogadmin/";
+    public static final String BASE_URL = "https://athkarapplication.com/blogadmin/";
+    //public static final String BASE_URL = "https://atiar.info/blogadmin/";
     public static final String BASE_URL_API = BASE_URL+"api/";
 
     private final APIInterface api;
     private Context _context = MyApplication.getContext();;
+/*
 
     int cacheSize = 100 * 1024 * 1024; // 100 MB
     Cache cache = new Cache(_context.getCacheDir(), cacheSize);
+*/
 
     public APIManager(){
 
@@ -37,7 +39,6 @@ public class APIManager {
                 .create();
 
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                .cache(cache)
                 .connectTimeout(5*60, TimeUnit.SECONDS)
                 .readTimeout(2*60, TimeUnit.SECONDS)
                 .writeTimeout(20*60, TimeUnit.SECONDS)

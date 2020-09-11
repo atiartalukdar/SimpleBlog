@@ -27,6 +27,8 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import bp.BP;
+import bp.BackgroundService;
+
 import com.athkarapplication.athkar.ui.home.HomeFragment;
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +39,9 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        //loading all the articles from background.
+        startService(new Intent(this, BackgroundService.class));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

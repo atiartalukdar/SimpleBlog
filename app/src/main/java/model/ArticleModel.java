@@ -29,7 +29,7 @@ public class ArticleModel
     private String articleOtherLan;
     @SerializedName("max_read")
     @Expose
-    private String maxRead;
+    private int maxRead;
     @SerializedName("status")
     @Expose
     private String status;
@@ -75,11 +75,11 @@ public class ArticleModel
         this.articleOtherLan = articleOtherLan;
     }
 
-    public String getMaxRead() {
+    public int getMaxRead() {
         return maxRead;
     }
 
-    public void setMaxRead(String maxRead) {
+    public void setMaxRead(int maxRead) {
         this.maxRead = maxRead;
     }
 
