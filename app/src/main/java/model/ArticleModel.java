@@ -150,5 +150,6 @@ public class ArticleModel
         this.sortingIndex = ArticleModel.getSortingIndex();
     }
 
-
+    public ArticleModel() {
+    }
 }

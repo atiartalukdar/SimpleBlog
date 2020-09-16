@@ -2,6 +2,7 @@ package com.athkarapplication.athkar;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -21,6 +22,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.work.BackoffPolicy;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import android.view.Menu;
 import android.widget.CompoundButton;
@@ -28,8 +36,13 @@ import android.widget.Switch;
 
 import bp.BP;
 import bp.BackgroundService;
+import bp.SyncDataWorker;
+import io.objectbox.android.AndroidObjectBrowser;
+import model.MyObjectBox;
 
 import com.athkarapplication.athkar.ui.home.HomeFragment;
+
+import java.util.concurrent.TimeUnit;
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final String TAG = getClass().getName() + " Atiar - ";
@@ -40,9 +53,21 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        //loading all the articles from background.
-        startService(new Intent(this, BackgroundService.class));
+        fetchData();
 
+       /* //loading all the articles from background.
+        Intent intent  = new Intent(this, BackgroundService.class);
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                this.startForegroundService(intent);
+            } else {
+                this.startService(intent);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+*/
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
@@ -142,5 +167,24 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void fetchData() {
+
+        // Create Network constraint
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+
+        OneTimeWorkRequest oneTimeWorkRequest =
+                new OneTimeWorkRequest.Builder(SyncDataWorker.class)
+                        .setConstraints(constraints)
+                        // setting a backoff on case the work needs to retry
+                        .setBackoffCriteria(BackoffPolicy.LINEAR, OneTimeWorkRequest.MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
+                        .build();
+
+        WorkManager.getInstance().enqueue(oneTimeWorkRequest);
+
     }
 }
