@@ -215,12 +215,12 @@ public class ArticleActivity extends AppCompatActivity {
     }
 
     // Activity
-    public void setTitle(String title){
+    public void setTitle(String title1){
+        String title = title1.replace("color","");
         //https://stackoverflow.com/questions/12387345/how-to-center-align-the-actionbar-title-in-android
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         TextView textView = new TextView(this);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             textView.setText(Html.fromHtml(title, Html.FROM_HTML_MODE_COMPACT));
         } else {
@@ -234,6 +234,8 @@ public class ArticleActivity extends AppCompatActivity {
         textView.setTextColor(getResources().getColor(R.color.white));
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(textView);
+
+        Log.e(TAG, title);
     }
 
     @Override
