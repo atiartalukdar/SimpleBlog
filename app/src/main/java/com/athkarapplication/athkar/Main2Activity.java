@@ -35,7 +35,6 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import bp.BP;
-import bp.BackgroundService;
 import bp.SyncDataWorker;
 import io.objectbox.android.AndroidObjectBrowser;
 import model.MyObjectBox;
@@ -187,4 +186,5 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         WorkManager.getInstance().enqueue(oneTimeWorkRequest);
 
     }
+
 }

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -25,7 +26,6 @@ import adapter.CategoryAdapter;
 import bp.BP;
 import com.athkarapplication.athkar.R;
 
-import bp.BackgroundService;
 import bp.ObjectBox;
 import io.objectbox.Box;
 import io.objectbox.query.QueryBuilder;
@@ -41,13 +41,14 @@ public class HomeFragment extends Fragment {
     private final  String TAG = getClass().getName() + " Atiar - ";
     private static ListView _listView;
     ImageView _topBanner;
-    ShimmerFrameLayout Loading;
+    //ShimmerFrameLayout Loading;
     private static Activity activity;
     APIManager _apiManager;
     static CategoryAdapter categoryAdapter;
     private static List<CategoryModel> categoryModelList = new ArrayList<>();
 
     private HomeViewModel homeViewModel;
+    ImageView imageView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,11 +56,14 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         activity = getActivity();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         _listView = root.findViewById(R.id.listview);
         _topBanner = root.findViewById(R.id.topBanner);
-        Loading = root.findViewById(R.id.shimmer_view_container);
-        Loading.startShimmer();
+        imageView = root.findViewById(R.id.loadingImageView);
+        imageView.setVisibility(View.VISIBLE);
+        //Loading = root.findViewById(R.id.shimmer_view_container);
+        //Loading.startShimmer();
         _apiManager = new APIManager();
 
         if (BP.getCurrentLanguage() == BP.ENGLISH){
@@ -100,8 +104,12 @@ public class HomeFragment extends Fragment {
                             categoryModelList.add(ctg);
                         }
                     }
-                    Loading.stopShimmer();
-                    Loading.setVisibility(View.GONE);
+                    //Loading.stopShimmer();
+                   // Loading.setVisibility(View.GONE);
+                    imageView.setVisibility(View.GONE);
+                    _listView.setVisibility(View.VISIBLE);
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
                     categoryAdapter.notifyDataSetChanged();
                 }
             }

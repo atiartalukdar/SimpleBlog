@@ -18,8 +18,7 @@
         <activity
             android:name="com.athkarapplication.athkar.MainActivity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.athkarapplication.athkar.ArticleActivity" />
         <activity
             android:name="com.athkarapplication.athkar.Main2Activity"
@@ -30,8 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service
-            android:name="bp.BackgroundService"/>
     </application>
 
 </manifest>
