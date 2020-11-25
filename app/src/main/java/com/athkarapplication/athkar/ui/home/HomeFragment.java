@@ -167,7 +167,7 @@ public class HomeFragment extends Fragment {
                                 .load(BP.ImageURL+response)
                                 .centerCrop()
                                 .fit()
-                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .networkPolicy(NetworkPolicy.NO_CACHE)
                                 .into(_topBanner);
                     }
                 }
