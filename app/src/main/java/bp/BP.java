@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.awt.font.TextAttribute;
+import java.io.IOException;
+import java.net.InetAddress;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
@@ -111,5 +113,27 @@ public class BP {
     public static void removeAllItem() {
         SharedPreferences settings = MyApplication.getContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         settings.edit().clear().commit();
+    }
+
+    public static boolean isInternetAvailable() {
+        try {
+            return isConnected();
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private static boolean isConnected() throws InterruptedException, IOException {
+        final String command = "ping -c 1 google.com";
+        return Runtime.getRuntime().exec(command).waitFor() == 0;
+    }
+
+    public static void setImagePath(String imagePathComplete){
+        setPreference(PREFS_NAME1,"imgUrl",imagePathComplete);
+    }
+
+    public static String getImagePath(){
+        return getPreferenceString(PREFS_NAME1,"imgUrl");
     }
 }

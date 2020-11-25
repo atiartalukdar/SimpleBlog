@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -46,9 +47,18 @@ public class HomeFragment extends Fragment {
     APIManager _apiManager;
     static CategoryAdapter categoryAdapter;
     private static List<CategoryModel> categoryModelList = new ArrayList<>();
+    Box<CategoryModel> categoryModelBox ;
 
     private HomeViewModel homeViewModel;
     ImageView imageView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        categoryModelBox = ObjectBox.get().boxFor(CategoryModel.class);
+        _apiManager = new APIManager();
+
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +74,6 @@ public class HomeFragment extends Fragment {
         imageView.setVisibility(View.VISIBLE);
         //Loading = root.findViewById(R.id.shimmer_view_container);
         //Loading.startShimmer();
-        _apiManager = new APIManager();
 
         if (BP.getCurrentLanguage() == BP.ENGLISH){
             categoryAdapter = new CategoryAdapter(getActivity(), categoryModelList,1);
@@ -73,7 +82,12 @@ public class HomeFragment extends Fragment {
         }
         _listView.setAdapter(categoryAdapter);
         loadFeatureImage();
-        loadCategoryListFromServer();
+
+        if (BP.isInternetAvailable()){
+            loadCategoryListFromServer();
+        }else {
+            loadCategoryListFromLocal();
+        }
         _listView.addHeaderView(new View(getContext()));
         _listView.addFooterView(new View(getContext()));
 
@@ -98,10 +112,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onSuccess(List<CategoryModel> response) {
                 if (response!=null){
+                    categoryModelBox.removeAll();
                     categoryModelList.clear();
                     for (CategoryModel ctg: response){
                         if (ctg.getStatus().equals("1")){
                             categoryModelList.add(ctg);
+                            categoryModelBox.put(ctg);
+
                         }
                     }
                     //Loading.stopShimmer();
@@ -120,26 +137,55 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+    private void loadCategoryListFromLocal() {
+            categoryModelList.clear();
+
+            categoryModelList.addAll(categoryModelBox.getAll());
+            //Loading.stopShimmer();
+            // Loading.setVisibility(View.GONE);
+        if (categoryModelList.size()>0){
+            imageView.setVisibility(View.GONE);
+            _listView.setVisibility(View.VISIBLE);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
+            categoryAdapter.notifyDataSetChanged();
+        }
+
+
+    }
 
     private void loadFeatureImage(){
-        _apiManager.getFeatureImage(new RequestListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                if (response != null){
-                    Log.e(TAG, "Image path = "+ BP.ImageURL+response);
-                    Picasso.get()
-                            .load(BP.ImageURL+response)
-                            .centerCrop()
-                            .fit()
-                            .into(_topBanner);
-                }
-            }
 
-            @Override
-            public void onError(Throwable t) {
-                Log.e(TAG,t.getMessage());
-            }
-        });
+        if (BP.isInternetAvailable()){
+            _apiManager.getFeatureImage(new RequestListener<String>() {
+                @Override
+                public void onSuccess(String response) {
+                    if (response != null){
+                        Log.e(TAG, "Image path = "+ BP.ImageURL+response);
+                        BP.setImagePath(BP.ImageURL+response);
+                        Picasso.get()
+                                .load(BP.ImageURL+response)
+                                .centerCrop()
+                                .fit()
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .into(_topBanner);
+                    }
+                }
+
+                @Override
+                public void onError(Throwable t) {
+                    Log.e(TAG,t.getMessage());
+                }
+            });
+        }else {
+            Picasso.get()
+                    .load(BP.getImagePath())
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .centerCrop()
+                    .fit()
+                    .into(_topBanner);
+        }
+
     }
 
     @Override
