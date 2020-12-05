@@ -49,7 +49,7 @@ import retrofit.RequestListener;
 public class ArticleActivity extends AppCompatActivity {
     private final String TAG = getClass().getName() + " Atiar - ";
     APIManager _apiManager;
-    List<ArticleModel> articleModelList = new ArrayList<>();;
+    List<ArticleModel> articleModelList;
     Vibrator v;
     ToneGenerator tg;
 
@@ -67,6 +67,7 @@ public class ArticleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_article);
         final Switch aSwitch =  findViewById(R.id.simpleSwitch1);
         articleModelBox = ObjectBox.get().boxFor(ArticleModel.class);
+        articleModelList = new ArrayList<>();
 
         Intent intent = getIntent();
         ctgID = intent.getStringExtra("id");
@@ -190,7 +191,8 @@ public class ArticleActivity extends AppCompatActivity {
         });
 */
 
-        articleModelList = articleModelBox.query().equal(ArticleModel_.categoryId, ctgID).build().find();
+        articleModelList = articleModelBox.query().equal(ArticleModel_.categoryId, ctgID).order(ArticleModel_.sortingIndex).build().find();
+        //articleModelList = articleModelBox.query().equal(ArticleModel_.sortingIndex, ctgID).build().find();
 
         position=0;
         if (BP.getCurrentLanguage()==BP.ENGLISH){

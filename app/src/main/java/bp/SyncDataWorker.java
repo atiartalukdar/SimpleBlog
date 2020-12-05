@@ -81,6 +81,7 @@ public class SyncDataWorker  extends Worker {
                                 localArticle.setUpdatedAt(serverArticle.getUpdatedAt());
                                 localArticle.setSortingIndex(serverArticle.getSortingIndex());
                                 articleModelBox.put(localArticle);
+                                Log.e("Atiar - new Article", serverArticle.toString());
                                 Log.e("Atiar - Article - ", " Article Updated");
                             }
                         }

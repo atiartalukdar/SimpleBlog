@@ -123,6 +123,7 @@ public class ArticleModel
                 ", artical='" + artical + '\'' +
                 ", maxRead='" + maxRead + '\'' +
                 ", status='" + status + '\'' +
+                ", sortingIndex='" + sortingIndex + '\'' +
                 '}';
     }
 

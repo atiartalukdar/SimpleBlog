@@ -19,25 +19,25 @@ public class CategoryModel
     public int categoryId;
     @SerializedName("category")
     @Expose
-    private String category;
+    public String category;
     @SerializedName("cat_other_lan")
     @Expose
-    private String catOtherLan;
+    public String catOtherLan;
     @SerializedName("cat_color_code")
     @Expose
-    private String catColorCode;
+    public String catColorCode;
     @SerializedName("status")
     @Expose
-    private String status;
+    public String status;
     @SerializedName("created_at")
     @Expose
-    private String createdAt;
+    public String createdAt;
     @SerializedName("updated_at")
     @Expose
-    private String updatedAt;
+    public String updatedAt;
     @SerializedName("sorting_index")
     @Expose
-    private String sortingIndex;
+    public String sortingIndex;
 
 
     public int getCategoryId() {

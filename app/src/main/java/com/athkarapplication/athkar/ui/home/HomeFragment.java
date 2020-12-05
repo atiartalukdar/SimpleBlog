@@ -137,10 +137,10 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
     private void loadCategoryListFromLocal() {
             categoryModelList.clear();
-
-            categoryModelList.addAll(categoryModelBox.getAll());
+            categoryModelList.addAll(categoryModelBox.query().order(CategoryModel_.sortingIndex).build().find());
             //Loading.stopShimmer();
             // Loading.setVisibility(View.GONE);
         if (categoryModelList.size()>0){
