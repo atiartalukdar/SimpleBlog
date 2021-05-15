@@ -23,7 +23,7 @@ public class BP {
     private static final String PREFS_NAME = "pref";
     private static final String PREFS_NAME1 = "pref1";
     //public static final String ImageURL = "https://athkarapplication.com/blogadmin/images/";
-    //public static final String ImageURL = "https://atiar.info/blogadmin/images/";
+    //public static final String ImageURL = "https://atiar.info/blogadmin/images/"; // taking from retrofit/API Manager
     public static final String ImageURL = APIManager.BASE_URL+"images/";
     public static String languageKey = "language";
     public static String openCounterKey = "openCounterKey";
