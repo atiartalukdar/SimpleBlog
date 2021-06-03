@@ -160,7 +160,6 @@ public class ArticleActivity extends AppCompatActivity {
     }
 
     private void loadArticles(final String ctgID) {
-
 /*
         _apiManager.getArticleList(ctgID, new RequestListener<List<ArticleModel>>() {
             @Override
@@ -192,7 +191,9 @@ public class ArticleActivity extends AppCompatActivity {
 */
 
         articleModelList = articleModelBox.query().equal(ArticleModel_.categoryId, ctgID).order(ArticleModel_.sortingIndex).build().find();
-        //articleModelList = articleModelBox.query().equal(ArticleModel_.sortingIndex, ctgID).build().find();
+        Log.e(TAG, articleModelBox.toString());
+
+        //articleModelList = articleModelBox.query().equal(ArticleModel_.categoryId,ctgID).build().find();
 
         position=0;
         if (BP.getCurrentLanguage()==BP.ENGLISH){

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.athkarapplication.athkar.BuildConfig;
 
+import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidObjectBrowser;
 import model.MyObjectBox;
 
@@ -21,11 +22,18 @@ public class MyApplication extends Application {
         context = getApplicationContext();
         ObjectBox.init(this);
 
-        if (BuildConfig.DEBUG) {
+/*        if (BuildConfig.DEBUG) {
             boolean started = new AndroidObjectBrowser(ObjectBox.get()).start(this);
             Log.e("Atiar - ObjectBrowser", "Started: " + started);
+            ObjectBox.get().removeAllObjects();
+        }*/
+
+        if (BuildConfig.DEBUG) {
+            boolean started = new AndroidObjectBrowser(ObjectBox.get()).start(this);
+            Log.i("ObjectBrowser", "Started: " + started);
         }
     }
 
     public static Context getContext (){return context; }
+
 }

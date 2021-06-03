@@ -31,7 +31,7 @@ public class AllArticleModel
     private String updatedAt;
     @SerializedName("sorting_index")
     @Expose
-    private String sortingIndex;
+    private Integer sortingIndex;
     @SerializedName("category")
     @Expose
     private CategoryModel category;
@@ -100,11 +100,11 @@ public class AllArticleModel
         this.updatedAt = updatedAt;
     }
 
-    public String getSortingIndex() {
+    public Integer getSortingIndex() {
         return sortingIndex;
     }
 
-    public void setSortingIndex(String sortingIndex) {
+    public void setSortingIndex(Integer sortingIndex) {
         this.sortingIndex = sortingIndex;
     }
 

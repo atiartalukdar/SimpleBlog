@@ -1,0 +1,137 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:5310979281832160173",
+      "lastPropertyId": "10:4001170418161185506",
+      "name": "ArticleModel",
+      "properties": [
+        {
+          "id": "1:1356202604192382630",
+          "name": "objectBoxID",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7993905386480606088",
+          "name": "articleId",
+          "indexId": "1:19957688232420151",
+          "type": 5,
+          "flags": 44
+        },
+        {
+          "id": "3:2453132327600186858",
+          "name": "categoryId",
+          "type": 9
+        },
+        {
+          "id": "4:8283100431211902929",
+          "name": "artical",
+          "type": 9
+        },
+        {
+          "id": "5:7199431420863131536",
+          "name": "articleOtherLan",
+          "type": 9
+        },
+        {
+          "id": "6:1909664793857187452",
+          "name": "maxRead",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "7:6088382849587469064",
+          "name": "status",
+          "type": 9
+        },
+        {
+          "id": "8:2392613710142972898",
+          "name": "createdAt",
+          "type": 9
+        },
+        {
+          "id": "9:348823917395596129",
+          "name": "updatedAt",
+          "type": 9
+        },
+        {
+          "id": "10:4001170418161185506",
+          "name": "sortingIndex",
+          "type": 5,
+          "flags": 2
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:2331119257791175948",
+      "lastPropertyId": "9:1013137185794105990",
+      "name": "CategoryModel",
+      "properties": [
+        {
+          "id": "1:4531197083578493787",
+          "name": "objectBoxID",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5913982307148138555",
+          "name": "categoryId",
+          "indexId": "2:4461711414685725824",
+          "type": 5,
+          "flags": 44
+        },
+        {
+          "id": "3:4719611851581455826",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "4:2919072233684300696",
+          "name": "catOtherLan",
+          "type": 9
+        },
+        {
+          "id": "5:2545698673771375015",
+          "name": "catColorCode",
+          "type": 9
+        },
+        {
+          "id": "6:6619540039436690769",
+          "name": "status",
+          "type": 9
+        },
+        {
+          "id": "7:6074155878342726612",
+          "name": "createdAt",
+          "type": 9
+        },
+        {
+          "id": "8:5455755653757941418",
+          "name": "updatedAt",
+          "type": 9
+        },
+        {
+          "id": "9:1013137185794105990",
+          "name": "sortingIndex",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "2:2331119257791175948",
+  "lastIndexId": "2:4461711414685725824",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
